@@ -12,3 +12,10 @@ output:
 ## Project thoughts
 
 I am interested in exploring data related to the education system and criminal justice. 
+
+Proposal: I will be analyzing the relationship between countries that were British colonies and their rates/timeline of war. The hypothesis will be, if a colony was British, then their civil war will be more frequent and long lasting. I believe entities like England leave colonies in disarray after they achieve freedom, as a result of having to break down the systemic foundations of the last ruler, and building up the new one. We will be observing the longevity/frequency of the civil wars.  
+
+Using Civil war data which is loaded into R. 
+
+
+
