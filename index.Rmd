@@ -43,7 +43,8 @@ rename(support = BGC5_4)
 
 critical0 <- critical |>
 group_by(ppstaten) |>
-  summarize(n = mean(support)) 
+  summarize(n = mean(support)) |>
+  mutate(prop_support = n / sum(n))
  
 critical0 |> ggplot(aes(x = ppstaten, y = n)) +
   geom_col()
@@ -54,8 +55,9 @@ yearelect <- facility|>
 filter(year == 2016) |>
 select(state, designcapacity) |>
 group_by(state) |>
-mutate(sum = mean(designcapacity)) |>
-summarise(sums = mean(sum))
+mutate(dc = mean(designcapacity)) |>
+summarise(sums = mean(dc)) |>
+mutate(prop_capacity = sums/ sum(sums))
 
 
 
@@ -74,16 +76,32 @@ library(tidyr)
 library(ggplot2)
 library(readr)
 
-both |>
-ggplot(mapping = aes(x = n,
-                     y = n1,
-                     color = ppstaten,
-                     fill = ppstaten)) +
-  geom_point() +
-  geom_smooth() +
-  scale_x_log10()
+ggplot(both, mapping = aes(x = prop_support,
+                     y = prop_capacity)) +
+  geom_point(mapping = aes(color = ppstaten)) +
+  geom_smooth(color = "black") 
 ```
 
+```{r}
+library(tidyverse)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(readr)
+library(broom)
+library(infer)
+
+fit_both <- lm(prop_capacity ~ prop_support, data = both)
+tidy(fit_both) |> knitr::kable(digits = 3)
+fit_both
+
+summary(fit_both) 
+
+modelsummary::modelsummary(fit_both,
+                           statistic = c("s.e. = {std.error}",
+                                         "p = {p.value}"),
+                           gof_map = c("nobs", "r.squared", "adj.r.squared"))
+```
 
 
 
