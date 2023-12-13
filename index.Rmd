@@ -8,21 +8,43 @@ output:
 ---
 
 
-## Project thoughts
+## Historical Context: 
+  In 1947, esteemed psychologists Dr. Kenneth Clark and Dr. Mamie Clark, the first African Americans to graduate from Columbia University with PhDs, conducted many doll tests and treated black youth at their independently founded center, the Northside Testing and Consultation Center. African American children in the area were found to have what the Clarks diagnosed as “Ingrained frustration,” which resulted from an early consciousness of race, understanding black or darker skin as inferior to white or lighter skin. These beliefs caused unruly behavior in young children like Peter, and the Clarks not only sought to discover the cause, but to find potential treatments. The Clarks found prejudice and discrimination like Jim Crow laws were damaging to the self-esteem of black youth, and therefore psychologically and emotionally harmed them. As a result of the Clarks’ studies, several treatments were found. These included increasing their literacy in addition to education surrounding African American culture. 
+  These findings align with recent statistics showing how black youth, especially boys, who weren’t reading at their reading level by 2nd grade would be almost guaranteed to be incarcerated before they turned 18. The legal suppression of literacy for black communities during slavery has left a legacy the youth are still fighting. In addition to that, the Clarks’ research reveals the intentional banning of books and curriculum that is representational and educational on topics of black culture is an attack on the psychological and mental health of black youth, since it was the very thing used as treatment in the study. It is important to note that for reasons like this, these tests were instrumental in revealing the horrors of academic racism in court cases like Brown v. Board of Education.
+	In addition to working for a civil rights law firm, I have done organizing for prison abolitionist campaigns, and as a result of this and the reasons outlined above, I am interested in exploring data related to the school to prison pipeline, the education system, and criminal justice. This project will investigate the question: Is there any correlation between prison capacities and opinions on Critical Race Theory in US states. 
+	
+## Research Question and Hypothesis: 
+  I will be analyzing the relationship between the capacities of prisons and people's views on Critical Race Theory in school systems. We often discuss the school to prison pipeline, understanding statistics like Black males who aren't reading at their grade level by 2nd grade, are almost guaranteed to fall victim to the prison system. With the recent attacks not just on education, but also on critical race theory, I am curious to see if there is any correlation between how much incarceration occurs in states/areas with a population who have adverse opinions on the teaching of slavery, civil war, and other topics. 
+  I will be using two data sets that are both loaded into R. One is a data set describing the presence of private prisons in the US throughout the last 30 years, their location, and their capacity. The other data set is a USA Today survey measuring wokeness, including a question about critical race theory. 
+  The variables of the prison facilities analyzed will be the state and the design capacity of the prisons, and the variables of the other set will be the state and level of support. The outcome that will be analyzed is the amount of support in areas with high capacity prisons (more incarcerated individuals). 
+  I think I will find that the areas with the most prisons and with higher capacity prisons will result in less support for critical race theory, and I am interested in seeing if areas with more capacity will have less support than areas with more prisons. 
+##
 
-I am interested in exploring data related to the education system and criminal justice. 
+### Prison Facilities Data Set
+| Name              | Description                                                                                                |
+|-------------------|------------------------------------------------------------------------------------------------------------|
+|`facilityname`             | Name of Facility                                                                                         |
+| `state`         | The state the prison is found in abbreviated                               |
+| `year`    | The year the data was collected                 |
+| `female`          | Gender identity of the respondent (1 = female, 0 = male)                                                   |
+| `designcapacity`           | Number of potential incarcerated                                             |     
 
-Research Question: Are places with private prisons more likely to have adverse opinions on Critical Race Theory?
-
-Proposal: I will be analyzing the relationship between the presence of private prisons and people's views on Critical Race Theory in school systems. We often discuss the school to prison pipeline, understanding statistics like Black males who aren't reading at their grade level by 2nd grade, are almost guaranteed to fall victim to the prison system. With the recent attacks not just on education, but also on critical race theory, I am curious to see if there is any correlation between not just where private prisons are owned and how much incarceration occurs, but also will these numbers reflect the states/ares with a population who have adverse opinions on the teaching of slavery, the civil war, and other topics. 
-
-I will be using two data sets, that are both loaded into R. One is a data set describing the presence of private prisons throughout the last 30 years, their location, and the amount of persons incarcerated in them. The other data set is a survey with measuring wokeness, including a question about critical race theory. 
-
-The variables analyzed will be the state and the design capacity of the prisons, analyzing how many each state has, and the variables of the other set will be the state and level of support. 
-
-The outcome that will be analyzed is the amount of support in areas with more prisons and areas with higher capacity prisons. 
-
-I think I will find that the areas with the most prisons and with higher cpacity prisons will result in less support for criitcal race theory, and I am interested in seeing if areas with more capacity will have less support than areas with more prisons. 
+## Wokeness Survey Data Set
+| Name              | Description                                                                                                |
+|-------------------|------------------------------------------------------------------------------------------------------------|
+| `BGC5_4`             | Question of support for Critical Race Theory (Changed Strongly Support, Somewhat Support, Somewhat Oppose, and Strongly Oppose to 100, 75, 50, and 25)                                                                                       |
+| `ppstaten`         | The state the respondent is from  abbreviated                             |
+| `year`    | The year the data was collected                 |
+| `female`          | Gender identity of the respondent (1 = female, 0 = male)                                                   |
+| `designcapacity`           | Number of potential incarcerated                                             |
+## Combined Data Set
+| Name              | Description                                                                                                |
+|-------------------|------------------------------------------------------------------------------------------------------------|
+| `ppstaten`         | The state the respondant is from and the prison is found                               |
+| `n`    | Mean value of support per state               |
+| `prop_support`          | proportion of support in regards to entire sample                                               |
+| `sums`        | Mean value of prison capacity per state                          |
+| `prop_capacity`   | proportion of capacity in regards to entire sample                                                                    |
 
 ```{r}
 library(tidyverse)
@@ -79,7 +101,12 @@ library(readr)
 ggplot(both, mapping = aes(x = prop_support,
                      y = prop_capacity)) +
   geom_point(mapping = aes(color = ppstaten)) +
-  geom_smooth(color = "black") 
+  geom_smooth(color = "black") +
+  labs(
+    title = "Prison Capacity vs. Support of Critical Race Theory in US 27 States",
+    x = "Proportion of Support",
+    y = "Proportion of Capacity"
+  )
 ```
 
 ```{r}

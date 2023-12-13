@@ -1543,14 +1543,41 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </div>
 
 <div class="d-article">
-<h2 id="project-thoughts">Project thoughts</h2>
-<p>I am interested in exploring data related to the education system and criminal justice.</p>
-<p>Research Question: Are places with private prisons more likely to have adverse opinions on Critical Race Theory?</p>
-<p>Proposal: I will be analyzing the relationship between the presence of private prisons and people’s views on Critical Race Theory in school systems. We often discuss the school to prison pipeline, understanding statistics like Black males who aren’t reading at their grade level by 2nd grade, are almost guaranteed to fall victim to the prison system. With the recent attacks not just on education, but also on critical race theory, I am curious to see if there is any correlation between not just where private prisons are owned and how much incarceration occurs, but also will these numbers reflect the states/ares with a population who have adverse opinions on the teaching of slavery, the civil war, and other topics.</p>
-<p>I will be using two data sets, that are both loaded into R. One is a data set describing the presence of private prisons throughout the last 30 years, their location, and the amount of persons incarcerated in them. The other data set is a survey with measuring wokeness, including a question about critical race theory.</p>
-<p>The variables analyzed will be the state and the design capacity of the prisons, analyzing how many each state has, and the variables of the other set will be the state and level of support.</p>
-<p>The outcome that will be analyzed is the amount of support in areas with more prisons and areas with higher capacity prisons.</p>
-<p>I think I will find that the areas with the most prisons and with higher cpacity prisons will result in less support for criitcal race theory, and I am interested in seeing if areas with more capacity will have less support than areas with more prisons.</p>
+<h2 id="historical-context">Historical Context:</h2>
+<p>In 1947, esteemed psychologists Dr. Kenneth Clark and Dr. Mamie Clark, the first African Americans to graduate from Columbia University with PhDs, conducted many doll tests and treated black youth at their independently founded center, the Northside Testing and Consultation Center. African American children in the area were found to have what the Clarks diagnosed as “Ingrained frustration,” which resulted from an early consciousness of race, understanding black or darker skin as inferior to white or lighter skin. These beliefs caused unruly behavior in young children like Peter, and the Clarks not only sought to discover the cause, but to find potential treatments. The Clarks found prejudice and discrimination like Jim Crow laws were damaging to the self-esteem of black youth, and therefore psychologically and emotionally harmed them. As a result of the Clarks’ studies, several treatments were found. These included increasing their literacy in addition to education surrounding African American culture.
+These findings align with recent statistics showing how black youth, especially boys, who weren’t reading at their reading level by 2nd grade would be almost guaranteed to be incarcerated before they turned 18. The legal suppression of literacy for black communities during slavery has left a legacy the youth are still fighting. In addition to that, the Clarks’ research reveals the intentional banning of books and curriculum that is representational and educational on topics of black culture is an attack on the psychological and mental health of black youth, since it was the very thing used as treatment in the study. It is important to note that for reasons like this, these tests were instrumental in revealing the horrors of academic racism in court cases like Brown v. Board of Education.
+In addition to working for a civil rights law firm, I have done organizing for prison abolitionist campaigns, and as a result of this and the reasons outlined above, I am interested in exploring data related to the school to prison pipeline, the education system, and criminal justice. This project will investigate the question: Is there any correlation between prison capacities and opinions on Critical Race Theory in US states.
+##</p>
+<p>##Research Question and Hypothesis:
+I will be analyzing the relationship between the capacities of prisons and people’s views on Critical Race Theory in school systems. We often discuss the school to prison pipeline, understanding statistics like Black males who aren’t reading at their grade level by 2nd grade, are almost guaranteed to fall victim to the prison system. With the recent attacks not just on education, but also on critical race theory, I am curious to see if there is any correlation between how much incarceration occurs in states/areas with a population who have adverse opinions on the teaching of slavery, civil war, and other topics.
+I will be using two data sets that are both loaded into R. One is a data set describing the presence of private prisons in the US throughout the last 30 years, their location, and their capacity. The other data set is a USA Today survey measuring wokeness, including a question about critical race theory.
+The variables of the prison facilities analyzed will be the state and the design capacity of the prisons, and the variables of the other set will be the state and level of support. The outcome that will be analyzed is the amount of support in areas with high capacity prisons (more incarcerated individuals).
+I think I will find that the areas with the most prisons and with higher capacity prisons will result in less support for critical race theory, and I am interested in seeing if areas with more capacity will have less support than areas with more prisons.
+##</p>
+<p>##Prison Facilities Data Set
+| Name | Description |
+|——————-|————————————————————————————————————|
+|<code>facilityname</code> | Name of Facility |
+| <code>state</code> | The state the prison is found in abbreviated |
+| <code>year</code> | The year the data was collected |
+| <code>female</code> | Gender identity of the respondent (1 = female, 0 = male) |
+| <code>designcapacity</code> | Number of potential incarcerated |</p>
+<p>##Wokeness Survey Data Set
+| Name | Description |
+|——————-|————————————————————————————————————|
+| <code>BGC5_4</code> | Question of support for Critical Race Theory (Changed Strongly Support, Somewhat Support, Somewhat Oppose, and Strongly Oppose to 100, 75, 50, and 25) |
+| <code>ppstaten</code> | The state the respondent is from abbreviated |
+| <code>year</code> | The year the data was collected |
+| <code>female</code> | Gender identity of the respondent (1 = female, 0 = male) |
+| <code>designcapacity</code> | Number of potential incarcerated |
+##Combined Data Set
+| Name | Description |
+|——————-|————————————————————————————————————|
+| <code>ppstaten</code> | The state the respondant is from and the prison is found |
+| <code>n</code> | Mean value of support per state |
+| <code>prop_support</code> | proportion of support in regards to entire sample |
+| <code>sums</code> | Mean value of prison capacity per state |
+| <code>prop_capacity</code> | proportion of capacity in regards to entire sample |</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyverse.tidyverse.org'>tidyverse</a></span><span class='op'>)</span></span>
@@ -1610,7 +1637,12 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>both</span>, mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>prop_support</span>,</span>
 <span>                     y <span class='op'>=</span> <span class='va'>prop_capacity</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
 <span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span>mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>color <span class='op'>=</span> <span class='va'>ppstaten</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
-<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span>color <span class='op'>=</span> <span class='st'>"black"</span><span class='op'>)</span> </span></code></pre>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span>color <span class='op'>=</span> <span class='st'>"black"</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span></span>
+<span>    title <span class='op'>=</span> <span class='st'>"Prison Capacity vs. Support of Critical Race Theory in US 27 States"</span>,</span>
+<span>    x <span class='op'>=</span> <span class='st'>"Proportion of Support"</span>,</span>
+<span>    y <span class='op'>=</span> <span class='st'>"Proportion of Capacity"</span></span>
+<span>  <span class='op'>)</span></span></code></pre>
 </div>
 <p><img src="index_files/figure-html5/unnamed-chunk-2-1.png" width="624" /></p>
 </div>
