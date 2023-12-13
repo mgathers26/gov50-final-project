@@ -15,12 +15,11 @@ output:
 	
 ## Research Question and Hypothesis: 
   I will be analyzing the relationship between the capacities of prisons and people's views on Critical Race Theory in school systems. We often discuss the school to prison pipeline, understanding statistics like Black males who aren't reading at their grade level by 2nd grade, are almost guaranteed to fall victim to the prison system. With the recent attacks not just on education, but also on critical race theory, I am curious to see if there is any correlation between how much incarceration occurs in states/areas with a population who have adverse opinions on the teaching of slavery, civil war, and other topics. 
-  I will be using two data sets that are both loaded into R. One is a data set describing the presence of private prisons in the US throughout the last 30 years, their location, and their capacity. The other data set is a USA Today survey measuring wokeness, including a question about critical race theory. 
+  I will be using two data sets that are both loaded into R. One is a data set describing the presence of private prisons in the US throughout the last 30 years, their location, and their capacity(https://www.annagunderson.com/data/private-prisons). The other data set is a USA Today survey measuring wokeness (https://ropercenter.cornell.edu/ipoll/study/31120147/questions#9af52f36-d878-442b-b4fd-11ee44a0ebb6), including a question about critical race theory. 
   The variables of the prison facilities analyzed will be the state and the design capacity of the prisons, and the variables of the other set will be the state and level of support. The outcome that will be analyzed is the amount of support in areas with high capacity prisons (more incarcerated individuals). 
   I think I will find that the areas with the most prisons and with higher capacity prisons will result in less support for critical race theory, and I am interested in seeing if areas with more capacity will have less support than areas with more prisons. 
-##
 
-### Prison Facilities Data Set
+## Prison Facilities Data Set
 | Name              | Description                                                                                                |
 |-------------------|------------------------------------------------------------------------------------------------------------|
 |`facilityname`             | Name of Facility                                                                                         |
@@ -36,7 +35,7 @@ output:
 | `ppstaten`         | The state the respondent is from  abbreviated                             |
 | `year`    | The year the data was collected                 |
 | `female`          | Gender identity of the respondent (1 = female, 0 = male)                                                   |
-| `designcapacity`           | Number of potential incarcerated                                             |
+| `designcapacity`           | Number of potential incarcerated |
 ## Combined Data Set
 | Name              | Description                                                                                                |
 |-------------------|------------------------------------------------------------------------------------------------------------|
@@ -69,7 +68,12 @@ group_by(ppstaten) |>
   mutate(prop_support = n / sum(n))
  
 critical0 |> ggplot(aes(x = ppstaten, y = n)) +
-  geom_col()
+  geom_col() +
+  labs(
+    title = "Critical Race Theory Support in US States",
+    x = "State",
+    y = "Mean Amount of Support" 
+  )
 
 
 
@@ -85,7 +89,12 @@ mutate(prop_capacity = sums/ sum(sums))
 
 
 yearelect |> ggplot(aes(x = state, y = sums)) +
-  geom_col()
+  geom_col() + 
+  labs(
+     title = "Prison Capacities in US States",
+    x = "State",
+    y = "Mean Amount of Prison Capacity"  
+  )
 
 both <- cbind(critical0,yearelect) |>
   select(-state)
@@ -129,7 +138,9 @@ modelsummary::modelsummary(fit_both,
                                          "p = {p.value}"),
                            gof_map = c("nobs", "r.squared", "adj.r.squared"))
 ```
+(4) a brief (one paragraph) concluding section that summarizes your results, assesses the extent to which you find support for your hypothesis, describes limitations of your analysis and threats to inference, and states how your analysis could be improved (e.g., improved data that would be useful to collect).
 
+For the data section, you should note if your research design is cross-sectional (most projects will be of this type) or one of the other designs we discussed (randomized experiment, before-and-after, differences-in-differences). For the results section, you should interpret (in plain English) the main coefficient of interest in your regression. You should also comment on the statistical significance of the estimated coefficient and whether or not you believe the coefficient to represent a causal effect.
 
 
 
