@@ -18,8 +18,6 @@ output:
   The variables of the prison facilities analyzed will be the state and the design capacity of the prisons, and the variables of the other set will be the state and level of support. The outcome that will be analyzed is the amount of support in areas with high capacity prisons (more incarcerated individuals). 
   I think I will find that the areas with the most prisons and with higher capacity prisons will result in less support for critical race theory, and I am interested in seeing if areas with more capacity will have less support than areas with more prisons. 
 
-##Data (Cross Sectional)
-
 ### Prison Facilities Data Set
 | Name              | Description                                                                                                |
 |-------------------|------------------------------------------------------------------------------------------------------------|
