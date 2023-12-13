@@ -19,6 +19,7 @@ output:
   I think I will find that the areas with the most prisons and with higher capacity prisons will result in less support for critical race theory, and I am interested in seeing if areas with more capacity will have less support than areas with more prisons. 
 
 ##Data (Cross Sectional)
+
 ### Prison Facilities Data Set
 | Name              | Description                                                                                                |
 |-------------------|------------------------------------------------------------------------------------------------------------|
@@ -52,11 +53,11 @@ library(tidyr)
 library(ggplot2)
 library(readr)
 
-
+### Downloading the respective data sets.
 criticalrt <- read_csv("~/Documents/crt.csv")
 facility <- read_csv("~/Documents/facilitydatabase.csv") 
 
-
+###Selecting variables from the original data sets, renaming variables to make it easier to understand. 
 critical <- criticalrt |>
 select(BGC5_4, ppstaten) |>
 na.omit() |>
@@ -67,15 +68,6 @@ group_by(ppstaten) |>
   summarize(n = mean(support)) |>
   mutate(prop_support = n / sum(n))
  
-critical0 |> ggplot(aes(x = ppstaten, y = n)) +
-  geom_col() +
-  labs(
-    title = "Critical Race Theory Support in US States",
-    x = "State",
-    y = "Mean Amount of Support" 
-  )
-
-
 
 yearelect <- facility|>
 filter(year == 2016) |>
@@ -85,8 +77,13 @@ mutate(dc = mean(designcapacity)) |>
 summarise(sums = mean(dc)) |>
 mutate(prop_capacity = sums/ sum(sums))
 
-
-
+### Visualizing the seperate data. 
+critical0 |> ggplot(aes(x = ppstaten, y = n)) +
+  geom_col() +
+  labs(
+    title = "Critical Race Theory Support in US States",
+    x = "State",
+    y = "Mean Amount of Support" )
 
 yearelect |> ggplot(aes(x = state, y = sums)) +
   geom_col() + 
@@ -96,10 +93,9 @@ yearelect |> ggplot(aes(x = state, y = sums)) +
     y = "Mean Amount of Prison Capacity"  
   )
 
-both <- cbind(critical0,yearelect) |>
-  select(-state)
-
 ```
+These two graphics depict the independent outcomes of the two variables in questions. With the states in alphabetical order and the two data sets seperate, it is hard to determine any correlation.  
+
 ```{r}
 library(tidyverse)
 library(dplyr)
@@ -107,6 +103,11 @@ library(tidyr)
 library(ggplot2)
 library(readr)
 
+### Combining the two data sets
+both <- cbind(critical0,yearelect) |>
+  select(-state)
+
+##Plotting the combined data to visualize correlation
 ggplot(both, mapping = aes(x = prop_support,
                      y = prop_capacity)) +
   geom_point(mapping = aes(color = ppstaten)) +
@@ -117,6 +118,7 @@ ggplot(both, mapping = aes(x = prop_support,
     y = "Proportion of Capacity"
   )
 ```
+This visual visualizes the correlation between support and prison capacity. There is a regression line of best fit, showing a downward line, hinting that there is a negative slope. The states with highest capacities seem to have lower support rates and vice versa, but this can only be confirmed with a regression test. 
 
 ```{r}
 library(tidyverse)
@@ -127,21 +129,25 @@ library(readr)
 library(broom)
 library(infer)
 
+## Running the regression 
 fit_both <- lm(prop_capacity ~ prop_support, data = both)
 tidy(fit_both) |> knitr::kable(digits = 3)
 fit_both
 
 summary(fit_both) 
 
+##Final summary of intercept and coefficient
 modelsummary::modelsummary(fit_both,
                            statistic = c("s.e. = {std.error}",
                                          "p = {p.value}"),
                            gof_map = c("nobs", "r.squared", "adj.r.squared"))
 ```
-(4) a brief (one paragraph) concluding section that summarizes your results, assesses the extent to which you find support for your hypothesis, describes limitations of your analysis and threats to inference, and states how your analysis could be improved (e.g., improved data that would be useful to collect).
 
-For the data section, you should note if your research design is cross-sectional (most projects will be of this type) or one of the other designs we discussed (randomized experiment, before-and-after, differences-in-differences). For the results section, you should interpret (in plain English) the main coefficient of interest in your regression. You should also comment on the statistical significance of the estimated coefficient and whether or not you believe the coefficient to represent a causal effect.
+The regression shows the coefficients, including -1.259, which means that as the capacity increases, support seems to decrease. The coefficient is statistically significant in this test since it has a p-value 0.03, which is below the threshold of 0.05, meaning we reject the null hypothesis and accept the hypothesis presented at the beginning.
 
+While this data is strong, only 27 states had data that was available to analyze, so it would be an improvement to analyze all 50 states. It would also be a strength to try different more recent years, since the prison data is taken from 2016 (the most recently available statistics). The poll that was completed also only asked half of the respondents the question, so it would be good to get more answers and more state representation. 
+
+I think the correlation is evident, but there is not necessarily enough evidence to determine causation. There could be confounders such as the amount of space where construction could occur.   
 
 
 

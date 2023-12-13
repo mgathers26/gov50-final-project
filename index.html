@@ -1552,7 +1552,8 @@ In addition to working for a civil rights law firm, I have done organizing for p
 I will be using two data sets that are both loaded into R. One is a data set describing the presence of private prisons in the US throughout the last 30 years, their location, and their capacity(<a href="https://www.annagunderson.com/data/private-prisons" class="uri">https://www.annagunderson.com/data/private-prisons</a>). The other data set is a USA Today survey measuring wokeness (<a href="https://ropercenter.cornell.edu/ipoll/study/31120147/questions#9af52f36-d878-442b-b4fd-11ee44a0ebb6" class="uri">https://ropercenter.cornell.edu/ipoll/study/31120147/questions#9af52f36-d878-442b-b4fd-11ee44a0ebb6</a>), including a question about critical race theory.
 The variables of the prison facilities analyzed will be the state and the design capacity of the prisons, and the variables of the other set will be the state and level of support. The outcome that will be analyzed is the amount of support in areas with high capacity prisons (more incarcerated individuals).
 I think I will find that the areas with the most prisons and with higher capacity prisons will result in less support for critical race theory, and I am interested in seeing if areas with more capacity will have less support than areas with more prisons.</p>
-<h2 id="prison-facilities-data-set">Prison Facilities Data Set</h2>
+<p>##Data (Cross Sectional)</p>
+<h3 id="prison-facilities-data-set">Prison Facilities Data Set</h3>
 <table>
 <colgroup>
 <col style="width: 14%" />
@@ -1587,7 +1588,7 @@ I think I will find that the areas with the most prisons and with higher capacit
 </tr>
 </tbody>
 </table>
-<h2 id="wokeness-survey-data-set">Wokeness Survey Data Set</h2>
+<h3 id="wokeness-survey-data-set">Wokeness Survey Data Set</h3>
 <table>
 <colgroup>
 <col style="width: 14%" />
@@ -1622,7 +1623,7 @@ I think I will find that the areas with the most prisons and with higher capacit
 </tr>
 </tbody>
 </table>
-<h2 id="combined-data-set">Combined Data Set</h2>
+<h3 id="combined-data-set">Combined Data Set</h3>
 <table>
 <colgroup>
 <col style="width: 14%" />
@@ -1665,11 +1666,11 @@ I think I will find that the areas with the most prisons and with higher capacit
 <span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span></span>
 <span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://readr.tidyverse.org'>readr</a></span><span class='op'>)</span></span>
 <span></span>
-<span></span>
+<span><span class='co'>### Downloading the respective data sets.</span></span>
 <span><span class='va'>criticalrt</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://readr.tidyverse.org/reference/read_delim.html'>read_csv</a></span><span class='op'>(</span><span class='st'>"~/Documents/crt.csv"</span><span class='op'>)</span></span>
 <span><span class='va'>facility</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://readr.tidyverse.org/reference/read_delim.html'>read_csv</a></span><span class='op'>(</span><span class='st'>"~/Documents/facilitydatabase.csv"</span><span class='op'>)</span> </span>
 <span></span>
-<span></span>
+<span><span class='co'>###Selecting variables from the original data sets, renaming variables to make it easier to understand. </span></span>
 <span><span class='va'>critical</span> <span class='op'>&lt;-</span> <span class='va'>criticalrt</span> <span class='op'>|&gt;</span></span>
 <span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>BGC5_4</span>, <span class='va'>ppstaten</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
 <span><span class='fu'><a href='https://rdrr.io/r/stats/na.fail.html'>na.omit</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
@@ -1680,17 +1681,8 @@ I think I will find that the areas with the most prisons and with higher capacit
 <span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarize</a></span><span class='op'>(</span>n <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>support</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
 <span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>prop_support <span class='op'>=</span> <span class='va'>n</span> <span class='op'>/</span> <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>n</span><span class='op'>)</span><span class='op'>)</span></span>
 <span> </span>
-<span><span class='va'>critical0</span> <span class='op'>|&gt;</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>ppstaten</span>, y <span class='op'>=</span> <span class='va'>n</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
-<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_bar.html'>geom_col</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span></span>
-<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span></span>
-<span>    title <span class='op'>=</span> <span class='st'>"Critical Race Theory Support in US States"</span>,</span>
-<span>    x <span class='op'>=</span> <span class='st'>"State"</span>,</span>
-<span>    y <span class='op'>=</span> <span class='st'>"Mean Amount of Support"</span> </span>
-<span>  <span class='op'>)</span></span></code></pre>
-</div>
-<img src="index_files/figure-html5/unnamed-chunk-1-1.png" width="624" />
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>yearelect</span> <span class='op'>&lt;-</span> <span class='va'>facility</span><span class='op'>|&gt;</span></span>
+<span></span>
+<span><span class='va'>yearelect</span> <span class='op'>&lt;-</span> <span class='va'>facility</span><span class='op'>|&gt;</span></span>
 <span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>year</span> <span class='op'>==</span> <span class='fl'>2016</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
 <span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>state</span>, <span class='va'>designcapacity</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
 <span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>state</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
@@ -1698,10 +1690,17 @@ I think I will find that the areas with the most prisons and with higher capacit
 <span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span><span class='op'>(</span>sums <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>dc</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
 <span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>prop_capacity <span class='op'>=</span> <span class='va'>sums</span><span class='op'>/</span> <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>sums</span><span class='op'>)</span><span class='op'>)</span></span>
 <span></span>
-<span></span>
-<span></span>
-<span></span>
-<span><span class='va'>yearelect</span> <span class='op'>|&gt;</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>state</span>, y <span class='op'>=</span> <span class='va'>sums</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span><span class='co'>### Visualizing the seperate data. </span></span>
+<span><span class='va'>critical0</span> <span class='op'>|&gt;</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>ppstaten</span>, y <span class='op'>=</span> <span class='va'>n</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_bar.html'>geom_col</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span></span>
+<span>    title <span class='op'>=</span> <span class='st'>"Critical Race Theory Support in US States"</span>,</span>
+<span>    x <span class='op'>=</span> <span class='st'>"State"</span>,</span>
+<span>    y <span class='op'>=</span> <span class='st'>"Mean Amount of Support"</span> <span class='op'>)</span></span></code></pre>
+</div>
+<img src="index_files/figure-html5/unnamed-chunk-1-1.png" width="624" />
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>yearelect</span> <span class='op'>|&gt;</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>state</span>, y <span class='op'>=</span> <span class='va'>sums</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
 <span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_bar.html'>geom_col</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span> </span>
 <span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span></span>
 <span>     title <span class='op'>=</span> <span class='st'>"Prison Capacities in US States"</span>,</span>
@@ -1709,12 +1708,9 @@ I think I will find that the areas with the most prisons and with higher capacit
 <span>    y <span class='op'>=</span> <span class='st'>"Mean Amount of Prison Capacity"</span>  </span>
 <span>  <span class='op'>)</span></span></code></pre>
 </div>
-<img src="index_files/figure-html5/unnamed-chunk-1-2.png" width="624" />
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>both</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span><span class='op'>(</span><span class='va'>critical0</span>,<span class='va'>yearelect</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='op'>-</span><span class='va'>state</span><span class='op'>)</span></span></code></pre>
+<p><img src="index_files/figure-html5/unnamed-chunk-1-2.png" width="624" /></p>
 </div>
-</div>
+<p>These two graphics depict the independent outcomes of the two variables in questions. With the states in alphabetical order and the two data sets seperate, it is hard to determine any correlation.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyverse.tidyverse.org'>tidyverse</a></span><span class='op'>)</span></span>
@@ -1723,6 +1719,11 @@ I think I will find that the areas with the most prisons and with higher capacit
 <span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span></span>
 <span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://readr.tidyverse.org'>readr</a></span><span class='op'>)</span></span>
 <span></span>
+<span><span class='co'>### Combining the two data sets</span></span>
+<span><span class='va'>both</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span><span class='op'>(</span><span class='va'>critical0</span>,<span class='va'>yearelect</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='op'>-</span><span class='va'>state</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='co'>##Plotting the combined data to visualize correlation</span></span>
 <span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>both</span>, mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>prop_support</span>,</span>
 <span>                     y <span class='op'>=</span> <span class='va'>prop_capacity</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
 <span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span>mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>color <span class='op'>=</span> <span class='va'>ppstaten</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
@@ -1735,6 +1736,7 @@ I think I will find that the areas with the most prisons and with higher capacit
 </div>
 <p><img src="index_files/figure-html5/unnamed-chunk-2-1.png" width="624" /></p>
 </div>
+<p>This visual visualizes the correlation between support and prison capacity. There is a regression line of best fit, showing a downward line, hinting that there is a negative slope. The states with highest capacities seem to have lower support rates and vice versa, but this can only be confirmed with a regression test.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyverse.tidyverse.org'>tidyverse</a></span><span class='op'>)</span></span>
@@ -1745,6 +1747,7 @@ I think I will find that the areas with the most prisons and with higher capacit
 <span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://broom.tidymodels.org/'>broom</a></span><span class='op'>)</span></span>
 <span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/tidymodels/infer'>infer</a></span><span class='op'>)</span></span>
 <span></span>
+<span><span class='co'>## Running the regression </span></span>
 <span><span class='va'>fit_both</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>prop_capacity</span> <span class='op'>~</span> <span class='va'>prop_support</span>, data <span class='op'>=</span> <span class='va'>both</span><span class='op'>)</span></span>
 <span><span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>fit_both</span><span class='op'>)</span> <span class='op'>|&gt;</span> <span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span>digits <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span></span></code></pre>
 </div>
@@ -1807,7 +1810,8 @@ Residual standard error: 0.0168 on 25 degrees of freedom
 Multiple R-squared:  0.175, Adjusted R-squared:  0.142 
 F-statistic: 5.302 on 1 and 25 DF,  p-value: 0.0299</code></pre>
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'>modelsummary</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/modelsummary/man/modelsummary.html'>modelsummary</a></span><span class='op'>(</span><span class='va'>fit_both</span>,</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>##Final summary of intercept and coefficient</span></span>
+<span><span class='fu'>modelsummary</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/modelsummary/man/modelsummary.html'>modelsummary</a></span><span class='op'>(</span><span class='va'>fit_both</span>,</span>
 <span>                           statistic <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"s.e. = {std.error}"</span>,</span>
 <span>                                         <span class='st'>"p = {p.value}"</span><span class='op'>)</span>,</span>
 <span>                           gof_map <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"nobs"</span>, <span class='st'>"r.squared"</span>, <span class='st'>"adj.r.squared"</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
@@ -1859,10 +1863,9 @@ F-statistic: 5.302 on 1 and 25 DF,  p-value: 0.0299</code></pre>
 </tbody>
 </table>
 </div>
-<ol start="4" type="1">
-<li>a brief (one paragraph) concluding section that summarizes your results, assesses the extent to which you find support for your hypothesis, describes limitations of your analysis and threats to inference, and states how your analysis could be improved (e.g., improved data that would be useful to collect).</li>
-</ol>
-<p>For the data section, you should note if your research design is cross-sectional (most projects will be of this type) or one of the other designs we discussed (randomized experiment, before-and-after, differences-in-differences). For the results section, you should interpret (in plain English) the main coefficient of interest in your regression. You should also comment on the statistical significance of the estimated coefficient and whether or not you believe the coefficient to represent a causal effect.</p>
+<p>The regression shows the coefficients, including -1.259, which means that as the capacity increases, support seems to decrease. The coefficient is statistically significant in this test since it has a p-value 0.03, which is below the threshold of 0.05, meaning we reject the null hypothesis and accept the hypothesis presented at the beginning.</p>
+<p>While this data is strong, only 27 states had data that was available to analyze, so it would be an improvement to analyze all 50 states. It would also be a strength to try different more recent years, since the prison data is taken from 2016 (the most recently available statistics). The poll that was completed also only asked half of the respondents the question, so it would be good to get more answers and more state representation.</p>
+<p>I think the correlation is evident, but there is not necessarily enough evidence to determine causation. There could be confounders such as the amount of space where construction could occur.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
