@@ -7,7 +7,6 @@ output:
     self_contained: false
 ---
 
-
 ## Historical Context: 
   In 1947, esteemed psychologists Dr. Kenneth Clark and Dr. Mamie Clark, the first African Americans to graduate from Columbia University with PhDs, conducted many doll tests and treated black youth at their independently founded center, the Northside Testing and Consultation Center. African American children in the area were found to have what the Clarks diagnosed as “Ingrained frustration,” which resulted from an early consciousness of race, understanding black or darker skin as inferior to white or lighter skin. These beliefs caused unruly behavior in young children like Peter, and the Clarks not only sought to discover the cause, but to find potential treatments. The Clarks found prejudice and discrimination like Jim Crow laws were damaging to the self-esteem of black youth, and therefore psychologically and emotionally harmed them. As a result of the Clarks’ studies, several treatments were found. These included increasing their literacy in addition to education surrounding African American culture. 
   These findings align with recent statistics showing how black youth, especially boys, who weren’t reading at their reading level by 2nd grade would be almost guaranteed to be incarcerated before they turned 18. The legal suppression of literacy for black communities during slavery has left a legacy the youth are still fighting. In addition to that, the Clarks’ research reveals the intentional banning of books and curriculum that is representational and educational on topics of black culture is an attack on the psychological and mental health of black youth, since it was the very thing used as treatment in the study. It is important to note that for reasons like this, these tests were instrumental in revealing the horrors of academic racism in court cases like Brown v. Board of Education.
@@ -19,7 +18,8 @@ output:
   The variables of the prison facilities analyzed will be the state and the design capacity of the prisons, and the variables of the other set will be the state and level of support. The outcome that will be analyzed is the amount of support in areas with high capacity prisons (more incarcerated individuals). 
   I think I will find that the areas with the most prisons and with higher capacity prisons will result in less support for critical race theory, and I am interested in seeing if areas with more capacity will have less support than areas with more prisons. 
 
-## Prison Facilities Data Set
+##Data (Cross Sectional)
+### Prison Facilities Data Set
 | Name              | Description                                                                                                |
 |-------------------|------------------------------------------------------------------------------------------------------------|
 |`facilityname`             | Name of Facility                                                                                         |
@@ -28,7 +28,7 @@ output:
 | `female`          | Gender identity of the respondent (1 = female, 0 = male)                                                   |
 | `designcapacity`           | Number of potential incarcerated                                             |     
 
-## Wokeness Survey Data Set
+### Wokeness Survey Data Set
 | Name              | Description                                                                                                |
 |-------------------|------------------------------------------------------------------------------------------------------------|
 | `BGC5_4`             | Question of support for Critical Race Theory (Changed Strongly Support, Somewhat Support, Somewhat Oppose, and Strongly Oppose to 100, 75, 50, and 25)                                                                                       |
@@ -36,7 +36,7 @@ output:
 | `year`    | The year the data was collected                 |
 | `female`          | Gender identity of the respondent (1 = female, 0 = male)                                                   |
 | `designcapacity`           | Number of potential incarcerated |
-## Combined Data Set
+### Combined Data Set
 | Name              | Description                                                                                                |
 |-------------------|------------------------------------------------------------------------------------------------------------|
 | `ppstaten`         | The state the respondant is from and the prison is found                               |
