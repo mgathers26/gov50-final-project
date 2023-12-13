@@ -143,10 +143,8 @@ modelsummary::modelsummary(fit_both,
 
 The regression shows the coefficients, including -1.259, which means that as the capacity increases, support seems to decrease. The coefficient is statistically significant in this test since it has a p-value 0.03, which is below the threshold of 0.05, meaning we reject the null hypothesis and accept the hypothesis presented at the beginning.
 
+I think this finding is important in understanding the relationship between the attacks on education, and the increased problem of mass incarceration. 
+
 While this data is strong, only 27 states had data that was available to analyze, so it would be an improvement to analyze all 50 states. It would also be a strength to try different more recent years, since the prison data is taken from 2016 (the most recently available statistics). The poll that was completed also only asked half of the respondents the question, so it would be good to get more answers and more state representation. 
 
 I think the correlation is evident, but there is not necessarily enough evidence to determine causation. There could be confounders such as the amount of space where construction could occur.   
-
-
-
-
