@@ -24,7 +24,6 @@ output:
 |`facilityname`             | Name of Facility                                                                                         |
 | `state`         | The state the prison is found in abbreviated                               |
 | `year`    | The year the data was collected                 |
-| `female`          | Gender identity of the respondent (1 = female, 0 = male)                                                   |
 | `designcapacity`           | Number of potential incarcerated                                             |     
 
 ### Wokeness Survey Data Set
@@ -33,8 +32,6 @@ output:
 | `BGC5_4`             | Question of support for Critical Race Theory (Changed Strongly Support, Somewhat Support, Somewhat Oppose, and Strongly Oppose to 100, 75, 50, and 25)                                                                                       |
 | `ppstaten`         | The state the respondent is from  abbreviated                             |
 | `year`    | The year the data was collected                 |
-| `female`          | Gender identity of the respondent (1 = female, 0 = male)                                                   |
-| `designcapacity`           | Number of potential incarcerated |
 ### Combined Data Set
 | Name              | Description                                                                                                |
 |-------------------|------------------------------------------------------------------------------------------------------------|
